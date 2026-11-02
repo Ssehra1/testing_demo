@@ -1,0 +1,29 @@
+name: Automated Testing Demo
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install pytest
+        run: python -m pip install -r requirements.txt
+
+      - name: Run integration tests
+        run: python -m pytest -v Tests/test_integration.py
+
+      - name: Run test double examples
+        run: python -m pytest -v Tests/test_doubles.py
